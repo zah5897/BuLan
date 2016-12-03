@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mingmay.bulan"
+    android:versionCode="2"
+    android:versionName="2.0.0">
+
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="19" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <!-- 环信 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!-- end -->
+
+    <application
+        android:name="com.mingmay.bulan.app.CCApplication"
+        android:allowBackup="false"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:persistent="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name="com.mingmay.bulan.ui.LoginPage"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.mingmay.bulan.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.mingmay.bulan.ui.RegistPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.mingmay.bulan.ui.fragment.TextCreatorPage"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name="com.mingmay.bulan.ui.fragment.publish.BuLanPublishActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name="com.mingmay.bulan.ui.MyStorePage"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name="com.mingmay.bulan.ui.MyBuLanPage"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name="com.mingmay.bulan.ui.MyInfoPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.mingmay.bulan.ui.SettingPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.mingmay.bulan.ui.AboutPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.mingmay.bulan.ui.SearchPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.mingmay.bulan.ui.BulanDetialPage"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name="com.mingmay.bulan.ui.ModifyPassWordPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.mingmay.bulan.ui.CommentPage"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name="com.mingmay.bulan.ui.ForgetPassword"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.mingmay.bulan.ui.friend.ContactPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.mingmay.bulan.ui.friend.FriendCirclePage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.mingmay.bulan.ui.friend.SearchFriend"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.mingmay.bulan.ui.FriendInfoPage"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="com.mingmay.bulan.ui.Browser"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.mingmay.bulan.ui.FriendSettingPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.mingmay.bulan.ui.ChatActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+        <activity
+            android:name="com.zbar.lib.CaptureActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+        <activity
+            android:name="com.mingmay.bulan.ui.group.NewGroupActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+        <activity android:name="com.mingmay.bulan.ui.friend.GroupPage"></activity>
+        <activity
+            android:name="com.mingmay.bulan.ui.group.GroupDetailsActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+        <activity
+            android:name="com.mingmay.bulan.ui.group.EditActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+        <activity
+            android:name="com.mingmay.bulan.ui.group.RoomDetailsActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+        <activity
+            android:name="com.mingmay.bulan.ui.CommentDetialPage"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name="com.mingmay.bulan.ui.fragment.type.CreateZhuanLanPage"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+        <activity
+            android:name="com.mingmay.bulan.ui.ZhuanLanListActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+        <activity
+            android:name="com.mingmay.bulan.ui.FollowZhuanLanActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+        <activity
+            android:name="com.mingmay.bulan.ui.fragment.type.ModifyZhuanLanPage"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+        <activity android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"></activity>
+        <activity android:name="com.mingmay.bulan.ui.AboutServiceTipPage" />
+        <activity android:name="com.mingmay.bulan.ui.SelectedTagPage" />
+        <activity android:name="com.mingmay.bulan.ui.Submit" />
+        <activity android:name="com.mingmay.bulan.ui.MessageCenter" />
+        <activity android:name="com.mingmay.bulan.ui.BulanSaves" />
+        <activity android:name="com.mingmay.bulan.ui.ShowBigImage" />
+        <activity
+            android:name="com.mingmay.bulan.ui.fragment.type.HotZhanLanPage"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name="com.mingmay.bulan.ui.friend.ImAtContactPage" />
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="com.mingmay.bulan.ShareActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.mingmay.bulan.ui.chat.ContextMenuActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyle"></activity>
+        <activity
+            android:name="com.mingmay.bulan.ui.chat.PickAtUserActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.mingmay.bulan.ui.ZhuanLanRequestMessageCenter"
+            android:screenOrientation="portrait" />
+
+        <!-- 显示下载大图页面 -->
+        <activity
+            android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"></activity>
+
+
+        <!--直播相关-->
+        <activity
+            android:name="com.easemob.livedemo.ui.activity.StartLiveActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="com.easemob.livedemo.ui.activity.LiveDetailsActivity"
+            android:screenOrientation="portrait"></activity>
+
+
+        <service
+            android:name="com.mingmay.bulan.service.CCService"
+            android:exported="false"></service>
+
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="mingmay#bulan" />
+        <!-- 声明sdk所需的service -->
+        <service
+            android:name="com.hyphenate.chat.EMChatService"
+            android:exported="true" />
+        <!-- 声明sdk所需的receiver -->
+        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+            <!-- 可选filter -->
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="LDtVuKGDBzW7GKOohMGIDvF1" />
+
+        <activity
+            android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity"
+            android:screenOrientation="portrait" /><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+    </application>
+
+</manifest>

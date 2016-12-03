@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/BuLan.iml" filepath="$PROJECT_DIR$/BuLan.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HX_IM/HX_IM.iml" filepath="$PROJECT_DIR$/HX_IM/HX_IM.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HX_Live/HX_Live.iml" filepath="$PROJECT_DIR$/HX_Live/HX_Live.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Multi-image-selector/Multi-image-selector.iml" filepath="$PROJECT_DIR$/Multi-image-selector/Multi-image-selector.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ShareSDK/ShareSDK.iml" filepath="$PROJECT_DIR$/ShareSDK/ShareSDK.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Widget/Widget.iml" filepath="$PROJECT_DIR$/Widget/Widget.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+    </modules>
+  </component>
+</project>
