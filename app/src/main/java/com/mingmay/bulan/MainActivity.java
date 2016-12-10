@@ -77,7 +77,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
         startService(new Intent(this, CCService.class)
                 .setAction(CCService.Action_UPLOAD_ALL_BULAN));
         EMClient.getInstance()
-                .addConnectionListener(new MyConnectionListener());
+                .addConnectionListener(myConnectionListener);
         int index = getIntent().getIntExtra("index", -1);
         if (index > 0) {
             selectInstanceByIndex(index);
@@ -170,6 +170,15 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        if (intent != null && intent.getBooleanExtra("relogin", false)) {
+            CCApplication.mianActivity = null;
+            Intent toLogin = new Intent(MainActivity.this, LoginPage.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         ((RadioButton) findViewById(R.id.topic)).setChecked(true);
 
     }
@@ -274,28 +283,31 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
     // }
 
     // 实现ConnectionListener接口
-    private class MyConnectionListener implements EMConnectionListener {
+    private EMConnectionListener myConnectionListener = new EMConnectionListener() {
         @Override
         public void onConnected() {
-            // 已连接到服务器
             EMClient.getInstance().chatManager().loadAllConversations();
         }
 
         @Override
-        public void onDisconnected(final int error) {
-
+        public void onDisconnected(int i) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     // 显示帐号在其他设备登陆
+                    EMClient.getInstance().removeConnectionListener(myConnectionListener);
+
                     UserManager.getInstance().logout();
-                    startActivity(new Intent(MainActivity.this, LoginPage.class));
-                    finish();
+                    Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                    intent.putExtra("relogin", true);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
 
                 }
             });
         }
-    }
+
+    };
 
     public void mineTabMsgTip() {
 

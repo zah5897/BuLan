@@ -35,10 +35,7 @@ public class HomeListView extends ListView {
 			int deltaX = x - mLastMotionX;
 			final float xDiff = Math.abs(deltaX);
 			final float yDiff = Math.abs(deltaY);
-			if (yDiff < mTouchSlop || xDiff >= yDiff)
-				return false;
-			else
-				return true;
+			return !(yDiff < mTouchSlop || xDiff >= yDiff);
 		case MotionEvent.ACTION_UP:
 		case MotionEvent.ACTION_CANCEL:
 			break;

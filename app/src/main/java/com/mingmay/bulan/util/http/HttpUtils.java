@@ -45,7 +45,7 @@ public class HttpUtils {
 		return httpClient;
 	}
 
-	public static HttpResponse get(String URL) throws ClientProtocolException,
+	public static HttpResponse get(String URL) throws
 			IOException {
 		BasicHttpParams httpParams = new BasicHttpParams();
 		HttpConnectionParams.setConnectionTimeout(httpParams, 20000);

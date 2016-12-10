@@ -144,7 +144,7 @@ public class CCService extends Service {
 	}
 
 	private void uploadFile(ArrayList<BulanEditModel> bms)
-			throws ClientProtocolException, IOException, JSONException {
+			throws IOException, JSONException {
 		String URL = CCApplication.HTTPSERVER + "/m_file!addNewFile.action";
 		int i = 0;
 		for (BulanEditModel bm : bms) {
@@ -181,7 +181,7 @@ public class CCService extends Service {
 	}
 
 	private boolean uploadIconFile(BuLanSaveModel bsm)
-			throws ClientProtocolException, IOException, JSONException {
+			throws IOException, JSONException {
 		if (TextUtils.isEmpty(bsm.iconPath)) {
 			return false;
 		}

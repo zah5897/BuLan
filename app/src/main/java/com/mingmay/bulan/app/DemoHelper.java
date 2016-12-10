@@ -47,14 +47,14 @@ public class DemoHelper {
 	/**
 	 * data sync listener
 	 */
-	static public interface DataSyncListener {
+	public interface DataSyncListener {
 		/**
 		 * sync complete
 		 * 
 		 * @param success
 		 *            true：data sync successful，false: failed to sync data
 		 */
-		public void onSyncComplete(boolean success);
+		void onSyncComplete(boolean success);
 	}
 
 	protected static final String TAG = "DemoHelper";
@@ -237,12 +237,8 @@ public class DemoHelper {
 						// notNotifyIds = demoModel.getDisabledGroups();
 					}
 
-					if (notNotifyIds == null
-							|| !notNotifyIds.contains(chatUsename)) {
-						return true;
-					} else {
-						return false;
-					}
+					return notNotifyIds == null
+							|| !notNotifyIds.contains(chatUsename);
 				}
 			}
 		});
@@ -917,7 +913,7 @@ public class DemoHelper {
 	}
 
 	public DemoModel getModel() {
-		return (DemoModel) demoModel;
+		return demoModel;
 	}
 
 	/**

@@ -102,12 +102,12 @@ public class TopicFragment extends Fragment {
 			public void onPullDownToRefresh(
 					com.handmark.pulltorefresh.library.PullToRefreshBase<ListView> refreshView) {
 				pageDataLoad(false);
-			};
+			}
 
 			public void onPullUpToRefresh(
 					com.handmark.pulltorefresh.library.PullToRefreshBase<ListView> refreshView) {
 				pageDataLoad(true);
-			};
+			}
 		};
 		mPullRefreshListView.setOnRefreshListener(onr);
 		mListview = mPullRefreshListView.getRefreshableView();

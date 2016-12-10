@@ -518,7 +518,7 @@ public class TextCreatorPage extends Activity implements OnClickListener,
 
 	private void setKeyListener(EditText v) {
 		if (v instanceof EditText) {
-			((EditText) v).setOnKeyListener(new OnKeyListener() {
+			v.setOnKeyListener(new OnKeyListener() {
 
 				@Override
 				public boolean onKey(View view, int arg1, KeyEvent event) {
@@ -633,6 +633,6 @@ public class TextCreatorPage extends Activity implements OnClickListener,
 			emojiconGroupList.add(new EaseEmojiconGroupEntity(R.drawable.ee_1,
 					Arrays.asList(EaseDefaultEmojiconDatas.getData())));
 		}
-		((EaseEmojiconMenu) emojiconMenu).init(emojiconGroupList);
+		emojiconMenu.init(emojiconGroupList);
 	}
 }

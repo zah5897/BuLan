@@ -211,7 +211,7 @@ public class ForgetPassword extends Activity {
 
 				break;
 			}
-		};
+		}
 	};
 
 	private int timeUp = 0;

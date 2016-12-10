@@ -92,12 +92,12 @@ public class MessageCenter extends BaseActivity {
 			public void onPullDownToRefresh(
 					com.handmark.pulltorefresh.library.PullToRefreshBase<ListView> refreshView) {
 				loadMessage(false);
-			};
+			}
 
 			public void onPullUpToRefresh(
 					com.handmark.pulltorefresh.library.PullToRefreshBase<ListView> refreshView) {
 				loadMessage(true);
-			};
+			}
 		};
 		mPullRefreshListView.setOnRefreshListener(onr);
 		ListView actualListView = mPullRefreshListView.getRefreshableView();

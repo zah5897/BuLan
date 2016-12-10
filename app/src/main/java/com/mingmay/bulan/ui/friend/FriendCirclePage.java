@@ -70,12 +70,12 @@ public class FriendCirclePage extends Activity implements OnClickListener {
 			public void onPullDownToRefresh(
 					com.handmark.pulltorefresh.library.PullToRefreshBase<ListView> refreshView) {
 				loadData(false);
-			};
+			}
 
 			public void onPullUpToRefresh(
 					com.handmark.pulltorefresh.library.PullToRefreshBase<ListView> refreshView) {
 				loadData(true);
-			};
+			}
 		};
 		mPullRefreshListView.setOnRefreshListener(onr);
 		ListView actualListView = mPullRefreshListView.getRefreshableView();

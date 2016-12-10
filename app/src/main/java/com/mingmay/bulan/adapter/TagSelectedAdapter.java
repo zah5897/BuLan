@@ -131,7 +131,7 @@ public class TagSelectedAdapter extends BaseAdapter {
 	Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			TagSelectedAdapter.this.notifyDataSetChanged();
-		};
+		}
 	};
 
 }

@@ -51,7 +51,7 @@ public class MyScrollView extends ScrollView {
 				onScrollListener.onScroll(scrollY);
 			}
 
-		};
+		}
 
 	};
 	@Override
@@ -73,7 +73,7 @@ public class MyScrollView extends ScrollView {
 		 * @param scrollY
 		 *            、
 		 */
-		public void onScroll(int scrollY);
+		void onScroll(int scrollY);
 	}
 
 }

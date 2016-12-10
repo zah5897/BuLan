@@ -103,12 +103,12 @@ public class ImAtContactPage extends Activity {
 			public void onPullDownToRefresh(
 					com.handmark.pulltorefresh.library.PullToRefreshBase<ListView> refreshView) {
 				loadData(false);
-			};
+			}
 
 			public void onPullUpToRefresh(
 					com.handmark.pulltorefresh.library.PullToRefreshBase<ListView> refreshView) {
 				loadData(true);
-			};
+			}
 		};
 		mPullRefreshListView.setOnRefreshListener(onr);
 		mListview = mPullRefreshListView.getRefreshableView();

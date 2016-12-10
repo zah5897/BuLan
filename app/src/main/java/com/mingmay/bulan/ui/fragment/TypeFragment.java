@@ -207,7 +207,7 @@ public class TypeFragment extends Fragment implements OnClickListener {
 			default:
 				break;
 			}
-		};
+		}
 	};
 	private Runnable dismiss = new Runnable() {
 		@Override

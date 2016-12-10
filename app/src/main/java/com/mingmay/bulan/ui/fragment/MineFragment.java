@@ -215,7 +215,7 @@ public class MineFragment extends Fragment implements OnClickListener {
 			} else if (msg.what == -1) {
 				ToastUtil.show("上传失败");
 			}
-		};
+		}
 	};
 
 	@Override

@@ -177,8 +177,15 @@ public class ChatActivity extends EaseBaseActivity {
         @Override
         public void onCmdMessageReceived(List<EMMessage> messages) {
             EMMessage message = messages.get(messages.size() - 1);
-            if ("action_live".equals(((EMCmdMessageBody) message.getBody()).action())) {
-                showLiveTip();
+            String action = ((EMCmdMessageBody) message.getBody()).action();
+            if ("action_live".equals(action)) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        showLiveTip();
+                    }
+                });
+
             }
         }
 
@@ -198,7 +205,6 @@ public class ChatActivity extends EaseBaseActivity {
     Dialog liveTip;
 
     private void showLiveTip() {
-        ToastUtil.show("该聊天室正在直播");
         if (liveTip != null && liveTip.isShowing()) {
             return;
         }

@@ -82,7 +82,7 @@ public class MyBuLanAdapter extends BaseAdapter {
 		} else {
 			viewHold = (ViewHolder) convertView.getTag();
 		}
-		BuLanModel bulan = (BuLanModel) getItem(position);
+		BuLanModel bulan = getItem(position);
 //		viewHold.icon.setImageUrl(bulan.bulanImage);
 		int w=(int) (70*CCApplication.density);
 		ImageLoadUtil.load(activity, viewHold.icon, bulan.bulanImage,new int[]{w,w});

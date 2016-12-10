@@ -56,7 +56,7 @@ public class ChatListpage extends Activity implements OnClickListener {
 				public void onItemClick(AdapterView<?> arg0, View arg1,
 						int arg2, long arg3) {
 					// TODO Auto-generated method stub
-					User f = (User) adapter.getItem(arg2);
+					User f = adapter.getItem(arg2);
 					toChat(f);
 				}
 			});

@@ -75,7 +75,7 @@ public class MyInfoPage extends Activity implements OnClickListener {
 		asyImg = ((CircularImageView) findViewById(R.id.head_icon));
 		ImageLoadUtil.load(this, asyImg, loginUser.userImg);
 
-		genderView.setChecked(loginUser.gender == Gender.Female ? true : false);
+		genderView.setChecked(loginUser.gender == Gender.Female);
 		asyImg.setOnClickListener(this);
 		nickName.setText(loginUser.firstName);
 		cityName.setText(loginUser.address);
@@ -290,6 +290,6 @@ public class MyInfoPage extends Activity implements OnClickListener {
 			} else if (msg.what == 100) {
 				setQr();
 			}
-		};
+		}
 	};
 }

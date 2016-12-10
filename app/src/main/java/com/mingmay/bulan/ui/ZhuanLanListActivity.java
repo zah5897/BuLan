@@ -141,14 +141,11 @@ public class ZhuanLanListActivity extends BaseActivity {
 				loadData(false);
 			}
 
-			;
-
 			public void onPullUpToRefresh(
 					PullToRefreshBase<ListView> refreshView) {
 				loadData(true);
 			}
 
-			;
 		};
 		mPullRefreshListView.setOnRefreshListener(onr);
 		mListview = mPullRefreshListView.getRefreshableView();

@@ -120,7 +120,7 @@ public class TagPublishAdapter extends BaseAdapter {
 	Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			TagPublishAdapter.this.notifyDataSetChanged();
-		};
+		}
 	};
 
 }

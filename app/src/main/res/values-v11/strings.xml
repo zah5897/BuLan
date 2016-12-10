@@ -2,8 +2,5 @@
 <resources>
 
     <string name="app_name">布栏</string>
-    <string name="action_settings">Settings</string>
-    <string name="weibosdk_demo_token_to_string_format_1">Token：%1$s \n有效期：%2$s</string>
-    <string name="scan_text">将二维码放入框内, 即可自动扫描</string>
 
 </resources>

@@ -293,7 +293,7 @@ public class RegistPage extends Activity implements OnClickListener {
 			default:
 				break;
 			}
-		};
+		}
 	};
 
 	private void reset() {

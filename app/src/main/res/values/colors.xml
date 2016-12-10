@@ -6,33 +6,25 @@
     <color name="black">#000000</color>
     <color name="orange">#FF8E32</color>
     <color name="green">#77CC6C</color>
-    <color name="mine_tool_layout_gray">#EBEEF0</color>
     <color name="gray_">#9C9C9C</color>
     <color name="gray">#E4E4E4</color>
     <color name="line_color">#E4E4E4</color>
     <color name="light_gray">#889C9C9C</color>
     <color name="light_gray_">#F6F6F6</color>
     <color name="light_gray_1">#F0EFF5</color>
-    <color name="regist_color">#5F8091</color>
     <color name="transparent">#00000000</color>
     <color name="half_transparent">#11000000</color>
-    <color name="weibo_listtab_off">#8d8d8d</color>
     <color name="half_trans">#88000000</color>
     <color name="alertdialog_line">#c6c6c6</color>
     <color name="actionsheet_blue">#037BFF</color>
     <color name="actionsheet_red">#FD4A2E</color>
     <color name="actionsheet_gray">#8F8F8F</color>
-    <color name="progress_bar_color">#CD503D</color>
-    <color name="result_view">#b0000000</color>
-    <color name="viewfinder_mask">#60000000</color>
-    <color name="possible_result_points">#c0ffff00</color>
     <color name="tag_selected">#937E5C</color>
     <color name="red">#FF0000</color>
     
     <color name="bulan_content_color">#383838</color>
 
     <drawable name="guide_transparent">#00000000</drawable>
-    <drawable name="default_loading_drawable">@color/gray</drawable>
 
-    
+
 </resources>

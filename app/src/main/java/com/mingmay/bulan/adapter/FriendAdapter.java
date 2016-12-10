@@ -71,7 +71,7 @@ public class FriendAdapter extends BaseAdapter {
 		} else {
 			viewHold = (ViewHolder) convertView.getTag();
 		}
-		User f = (User) getItem(position);
+		User f = getItem(position);
 		viewHold.name.setText(f.firstName);
 		if (TextUtils.isEmpty(f.signature)) {
 			viewHold.signature_last_msg.setVisibility(View.GONE);

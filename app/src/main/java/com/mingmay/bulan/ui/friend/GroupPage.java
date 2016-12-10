@@ -51,7 +51,7 @@ public class GroupPage extends Activity {
 			default:
 				break;
 			}
-		};
+		}
 	};
 
 	@Override

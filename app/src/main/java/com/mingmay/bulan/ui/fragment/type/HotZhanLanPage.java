@@ -74,12 +74,12 @@ public class HotZhanLanPage extends Activity {
 			public void onPullDownToRefresh(
 					com.handmark.pulltorefresh.library.PullToRefreshBase<ListView> refreshView) {
 				loadBuLan(false);
-			};
+			}
 
 			public void onPullUpToRefresh(
 					com.handmark.pulltorefresh.library.PullToRefreshBase<ListView> refreshView) {
 				loadBuLan(true);
-			};
+			}
 		};
 		mPullRefreshListView.setOnRefreshListener(onr);
 		ListView actualListView = mPullRefreshListView.getRefreshableView();

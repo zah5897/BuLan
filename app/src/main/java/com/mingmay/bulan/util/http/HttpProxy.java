@@ -27,7 +27,7 @@ public class HttpProxy {
 	public static final int CONNECTION_TIMEOUT = 10000;
 
 	public HttpResponse post(String URL, List<NameValuePair> params)
-			throws ClientProtocolException, IOException {
+			throws IOException {
 		params.addAll(ParamManager.headers);
 		HttpPost httpPost = new HttpPost(URL);
 		// httpPost.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
@@ -52,7 +52,7 @@ public class HttpProxy {
 	}
 
 	public HttpResponse post(String URL, MultipartEntity params)
-			throws ClientProtocolException, IOException {
+			throws IOException {
 		for (NameValuePair pair : ParamManager.headers) {
 			params.addPart(pair.getName(), new StringBody(pair.getValue()));
 		}

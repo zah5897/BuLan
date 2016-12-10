@@ -98,7 +98,7 @@ public class ModifyPassWordPage extends Activity {
 					}
 				}.start();
 
-			};
+			}
 		}.start();
 	}
 
@@ -118,6 +118,6 @@ public class ModifyPassWordPage extends Activity {
 				ToastUtil.show("修改密码失败");
 				break;
 			}
-		};
+		}
 	};
 }

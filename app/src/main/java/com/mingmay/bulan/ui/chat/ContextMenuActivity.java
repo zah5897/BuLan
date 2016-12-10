@@ -56,7 +56,7 @@ public class ContextMenuActivity extends BaseActivity {
 //		    setContentView(R.layout.em_context_menu_for_location);
 		}
 		if (isChatroom) {
-	        View v = (View) findViewById(R.id.forward);
+	        View v = findViewById(R.id.forward);
 	        if (v != null) {
 	            v.setVisibility(View.GONE);
 	        }

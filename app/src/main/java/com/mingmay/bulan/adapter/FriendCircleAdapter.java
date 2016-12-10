@@ -76,7 +76,7 @@ public class FriendCircleAdapter extends BaseAdapter {
 		} else {
 			viewHolder = (ViewHolder) arg1.getTag();
 		}
-		BuLanModel info = (BuLanModel) getItem(arg0);
+		BuLanModel info = getItem(arg0);
 
 		viewHolder.name.setText(info.firstName);
 		if (info.bulanTags != null && info.bulanTags.length > 0) {

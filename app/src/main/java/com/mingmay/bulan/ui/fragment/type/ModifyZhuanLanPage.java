@@ -241,7 +241,7 @@ public class ModifyZhuanLanPage extends BaseActivity {
 
 		List<User> ids = adapter.getObjects();
 		int size = ids.size();
-		if (size > 2) {
+		if (size > 1) {
 			String str = null;
 			for (int i = 0; i < size; i++) {
 				long user_id = ids.get(i).ID;
