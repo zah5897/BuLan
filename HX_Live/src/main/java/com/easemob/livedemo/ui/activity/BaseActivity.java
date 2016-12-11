@@ -1,13 +1,12 @@
 package com.easemob.livedemo.ui.activity;
 
-import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 /**
  * Created by wei on 2016/5/30.
  */
-public class BaseActivity extends Activity {
+public class BaseActivity extends AppCompatActivity{
 
 
     protected void showToast(final String toastContent){

@@ -12,17 +12,13 @@ import com.bumptech.glide.Glide;
 import com.easemob.livedemo.R;
 import com.hyphenate.easeui.widget.EaseImageView;
 
-
 /**
  * Created by wei on 2016/6/7.
  */
 @RemoteViews.RemoteView
 public class LiveLeftGiftView extends RelativeLayout {
-//    @BindView(R.id.avatar)
     EaseImageView avatar;
-//    @BindView(R.id.name)
     TextView name;
-//    @BindView(R.id.gift_image)
     ImageView giftImage;
 
     public LiveLeftGiftView(Context context) {
@@ -42,17 +38,20 @@ public class LiveLeftGiftView extends RelativeLayout {
 
     private void init(Context context, AttributeSet attrs) {
         LayoutInflater.from(context).inflate(R.layout.widget_left_gift, this);
+        avatar = (EaseImageView) findViewById(R.id.avatar);
+        name = (TextView) findViewById(R.id.name);
+        giftImage = (ImageView) findViewById(R.id.gift_image);
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name.setText(name);
     }
 
-    public void setAvatar(String avatar){
+    public void setAvatar(String avatar) {
         Glide.with(getContext()).load(avatar).into(this.avatar);
     }
 
-    public ImageView getGiftImageView(){
+    public ImageView getGiftImageView() {
         return giftImage;
     }
 }

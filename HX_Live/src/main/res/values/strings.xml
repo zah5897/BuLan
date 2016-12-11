@@ -10,10 +10,10 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_field_required">这个字段不能为空</string>
 
-    <string name="pref_default_video_frame_rate">15</string>
+    <string name="pref_default_video_frame_rate">10</string>
     <string name="pref_video_frame_rate">framerate</string>
 
-    <string name="pref_default_video_encoding_bit_rate">20</string>
+    <string name="pref_default_video_encoding_bit_rate">10</string>
 
     <string name="pref_video_encoding_bit_rate">bitrate</string>
 

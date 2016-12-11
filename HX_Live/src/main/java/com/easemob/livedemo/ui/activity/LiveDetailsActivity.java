@@ -3,6 +3,7 @@ package com.easemob.livedemo.ui.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
@@ -13,6 +14,10 @@ import android.widget.Toast;
 
 import com.easemob.livedemo.R;
 import com.easemob.livedemo.data.model.LiveRoom;
+import com.easemob.livedemo.ui.widget.BarrageLayout;
+import com.easemob.livedemo.ui.widget.LiveLeftGiftView;
+import com.easemob.livedemo.ui.widget.PeriscopeLayout;
+import com.easemob.livedemo.ui.widget.RoomMessagesView;
 import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMChatRoom;
 import com.hyphenate.chat.EMClient;
@@ -21,6 +26,7 @@ import com.ucloud.common.logger.L;
 import com.ucloud.player.widget.v2.UVideoView;
 
 import java.util.Random;
+
 
 public class LiveDetailsActivity extends LiveBaseActivity implements UVideoView.Callback {
 
@@ -33,30 +39,49 @@ public class LiveDetailsActivity extends LiveBaseActivity implements UVideoView.
     ImageView coverView;
     TextView usernameView;
 
-    @Override
-    protected void onActivityCreate(@Nullable Bundle savedInstanceState) {
-        setContentView(R.layout.activity_live_details);
 
+    private void initView() {
         loadingLayout = (RelativeLayout) findViewById(R.id.loading_layout);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         loadingText = (TextView) findViewById(R.id.loading_text);
-
         coverView = (ImageView) findViewById(R.id.cover_image);
         usernameView = (TextView) findViewById(R.id.tv_username);
+        findViewById(R.id.img_bt_close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
+
+        leftGiftView = (LiveLeftGiftView) findViewById(R.id.left_gift_view1);
+        leftGiftView2 = (LiveLeftGiftView) findViewById(R.id.left_gift_view2);
+        messageView = (RoomMessagesView) findViewById(R.id.message_view);
+        periscopeLayout = (PeriscopeLayout) findViewById(R.id.periscope_layout);
+        bottomBar = findViewById(R.id.bottom_bar);
+
+        barrageLayout = (BarrageLayout) findViewById(R.id.barrage_layout);
+        horizontalRecyclerView = (RecyclerView) findViewById(R.id.horizontal_recycle_view);
+        audienceNumView = (TextView) findViewById(R.id.audience_num);
+        newMsgNotifyImage = (ImageView) findViewById(R.id.new_messages_warn);
+    }
+
+    @Override
+    protected void onActivityCreate(@Nullable Bundle savedInstanceState) {
+        setContentView(R.layout.activity_live_details);
+        initView();
 
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
 
-        // LiveRoom liveRoom = getIntent().getParcelableExtra("liveroom");
-        //  liveId = liveRoom.getId();
-//        chatroomId = liveRoom.getChatroomId();
-        chatroomId = getIntent().getStringExtra("room_id");
-        // int coverRes = liveRoom.getCover();
-        // coverView.setImageResource(coverRes);
+        LiveRoom liveRoom = getIntent().getParcelableExtra("liveroom");
+        liveId = liveRoom.getId();
+        chatroomId = liveRoom.getChatroomId();
+        int coverRes = liveRoom.getCover();
+        coverView.setImageResource(coverRes);
 
-        //  anchorId = liveRoom.getAnchorId();
-//        usernameView.setText(anchorId);
+        anchorId = liveRoom.getAnchorId();
+        usernameView.setText(anchorId);
 
         mVideoView = (UVideoView) findViewById(R.id.videoview);
 
@@ -65,11 +90,10 @@ public class LiveDetailsActivity extends LiveBaseActivity implements UVideoView.
         mVideoView.setRatio(UVideoView.VIDEO_RATIO_FILL_PARENT);
         mVideoView.setDecoder(UVideoView.DECODER_VOD_SW);
 
-
         mVideoView.registerCallback(this);
-        mVideoView.setVideoPath(rtmpPlayStreamUrl + chatroomId);
+        mVideoView.setVideoPath(rtmpPlayStreamUrl + liveId);
+//      mVideoView.setVideoPath(rtmpPlayStreamUrl);
 
-        mVideoView.getLayoutParams().height = (int) (getResources().getDisplayMetrics().widthPixels * 0.56f);
     }
 
 
@@ -137,11 +161,7 @@ public class LiveDetailsActivity extends LiveBaseActivity implements UVideoView.
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    try {
-                                        periscopeLayout.addHeart();
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
+                                    periscopeLayout.addHeart();
                                 }
                             });
                             try {
@@ -175,10 +195,6 @@ public class LiveDetailsActivity extends LiveBaseActivity implements UVideoView.
 //                Toast.makeText(VideoActivity.this, "unstable network", Toast.LENGTH_SHORT).show();
                 break;
         }
-    }
-
-    public void close(View view) {
-        finish();
     }
 
 }

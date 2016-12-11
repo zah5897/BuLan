@@ -1,11 +1,15 @@
 package com.easemob.livedemo.ui.activity;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +31,7 @@ import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
+import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
 
 import java.util.ArrayList;
@@ -40,24 +45,15 @@ import java.util.List;
 public abstract class LiveBaseActivity extends BaseActivity {
     protected static final String TAG = "LiveActivity";
 
-    //  @BindView(R.id.left_gift_view1)
     LiveLeftGiftView leftGiftView;
-    //  @BindView(R.id.left_gift_view2)
     LiveLeftGiftView leftGiftView2;
-    //  @BindView(R.id.message_view)
     RoomMessagesView messageView;
-    //  @BindView(R.id.periscope_layout)
     PeriscopeLayout periscopeLayout;
-    //  @BindView(R.id.bottom_bar)
     View bottomBar;
 
-    //  @BindView(R.id.barrage_layout)
     BarrageLayout barrageLayout;
-    //  @BindView(R.id.horizontal_recycle_view)
     RecyclerView horizontalRecyclerView;
-    //  @BindView(R.id.audience_num)
     TextView audienceNumView;
-    //  @BindView(R.id.new_messages_warn)
     ImageView newMsgNotifyImage;
 
     protected String anchorId;
@@ -69,7 +65,7 @@ public abstract class LiveBaseActivity extends BaseActivity {
     /**
      * ucloud直播id
      */
-    protected String liveId = "bulan";
+    protected String liveId = "";
     protected boolean isMessageListInited;
     protected EMChatRoomChangeListener chatRoomChangeListener;
 
@@ -83,7 +79,6 @@ public abstract class LiveBaseActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        chatroomId = getIntent().getStringExtra("room_id");
         onActivityCreate(savedInstanceState);
     }
 
@@ -277,7 +272,6 @@ public abstract class LiveBaseActivity extends BaseActivity {
             if (DemoConstants.CMD_GIFT.equals(((EMCmdMessageBody) message.getBody()).action())) {
                 showLeftGiftVeiw(message.getFrom());
             }
-
         }
 
         @Override
@@ -306,59 +300,55 @@ public abstract class LiveBaseActivity extends BaseActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    messageView.init(chatroomId);
-                    messageView.setMessageViewListener(new RoomMessagesView.MessageViewListener() {
-                        @Override
-                        public void onMessageSend(String content) {
-                            EMMessage message = EMMessage.createTxtSendMessage(content, chatroomId);
-                            if (messageView.isBarrageShow) {
-                                message.setAttribute(DemoConstants.EXTRA_IS_BARRAGE_MSG, true);
-                                barrageLayout.addBarrage(content, EMClient.getInstance().getCurrentUser());
+                messageView.init(chatroomId);
+                messageView.setMessageViewListener(new RoomMessagesView.MessageViewListener() {
+                    @Override
+                    public void onMessageSend(String content) {
+                        EMMessage message = EMMessage.createTxtSendMessage(content, chatroomId);
+                        if (messageView.isBarrageShow) {
+                            message.setAttribute(DemoConstants.EXTRA_IS_BARRAGE_MSG, true);
+                            barrageLayout.addBarrage(content, EMClient.getInstance().getCurrentUser());
+                        }
+                        message.setChatType(EMMessage.ChatType.ChatRoom);
+                        EMClient.getInstance().chatManager().sendMessage(message);
+                        message.setMessageStatusCallback(new EMCallBack() {
+                            @Override
+                            public void onSuccess() {
+                                //刷新消息列表
+                                messageView.refreshSelectLast();
                             }
-                            message.setChatType(EMMessage.ChatType.ChatRoom);
-                            EMClient.getInstance().chatManager().sendMessage(message);
-                            message.setMessageStatusCallback(new EMCallBack() {
-                                @Override
-                                public void onSuccess() {
-                                    //刷新消息列表
-                                    messageView.refreshSelectLast();
-                                }
 
-                                @Override
-                                public void onError(int i, String s) {
-                                    showToast("消息发送失败！");
-                                }
+                            @Override
+                            public void onError(int i, String s) {
+                                showToast("消息发送失败！");
+                            }
 
-                                @Override
-                                public void onProgress(int i, String s) {
+                            @Override
+                            public void onProgress(int i, String s) {
 
-                                }
-                            });
-                        }
+                            }
+                        });
+                    }
 
-                        @Override
-                        public void onItemClickListener(final EMMessage message) {
-                            //if(message.getFrom().equals(EMClient.getInstance().getCurrentUser())){
-                            //    return;
-                            //}
-                            String clickUsername = message.getFrom();
-                            showUserDetailsDialog(clickUsername);
-                        }
+                    @Override
+                    public void onItemClickListener(final EMMessage message) {
+                        //if(message.getFrom().equals(EMClient.getInstance().getCurrentUser())){
+                        //    return;
+                        //}
+                        String clickUsername = message.getFrom();
+                        showUserDetailsDialog(clickUsername);
+                    }
 
-                        @Override
-                        public void onHiderBottomBar() {
-                            bottomBar.setVisibility(View.VISIBLE);
-                        }
-                    });
-                    messageView.setVisibility(View.VISIBLE);
-                    bottomBar.setVisibility(View.VISIBLE);
-                    isMessageListInited = true;
-                    updateUnreadMsgView();
-                    showMemberList();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                    @Override
+                    public void onHiderBottomBar() {
+                        bottomBar.setVisibility(View.VISIBLE);
+                    }
+                });
+                messageView.setVisibility(View.VISIBLE);
+                bottomBar.setVisibility(View.VISIBLE);
+                isMessageListInited = true;
+                updateUnreadMsgView();
+                showMemberList();
             }
         });
     }
@@ -381,17 +371,6 @@ public abstract class LiveBaseActivity extends BaseActivity {
 
 
     private void showUserDetailsDialog(String username) {
-//    final RoomUserDetailsDialog dialog =
-//        RoomUserDetailsDialog.newInstance(username);
-//    dialog.setUserDetailsDialogListener(
-//        new RoomUserDetailsDialog.UserDetailsDialogListener() {
-//          @Override public void onMentionClick(String username) {
-//            dialog.dismiss();
-//            messageView.getInputView().setText("@" + username + " ");
-//            showInputView();
-//          }
-//        });
-//    dialog.show(getSupportFragmentManager(), "RoomUserDetailsDialog");
     }
 
     private void showInputView() {
@@ -408,27 +387,29 @@ public abstract class LiveBaseActivity extends BaseActivity {
     }
 
     void showMemberList() {
-//    LinearLayoutManager layoutManager = new LinearLayoutManager(LiveBaseActivity.this);
-//    layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-//    horizontalRecyclerView.setLayoutManager(layoutManager);
-//    horizontalRecyclerView.setAdapter(new AvatarAdapter(LiveBaseActivity.this, memberList));
-//    new Thread(new Runnable() {
-//      @Override public void run() {
-//        try {
-//          chatroom =
-//              EMClient.getInstance().chatroomManager().fetchChatRoomFromServer(chatroomId);
-//          memberList.addAll(chatroom.);
-//        } catch (HyphenateException e) {
-//          e.printStackTrace();
-//        }
-//        runOnUiThread(new Runnable() {
-//          @Override public void run() {
-//            audienceNumView.setText(String.valueOf(memberList.size()));
-//            horizontalRecyclerView.getAdapter().notifyDataSetChanged();
-//          }
-//        });
-//      }
-//    }).start();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(LiveBaseActivity.this);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        horizontalRecyclerView.setLayoutManager(layoutManager);
+        horizontalRecyclerView.setAdapter(new AvatarAdapter(LiveBaseActivity.this, memberList));
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    chatroom =
+                            EMClient.getInstance().chatroomManager().fetchChatRoomFromServer(chatroomId);
+                    //memberList.addAll(EMClient.getInstance().chatroomManager().);
+                } catch (HyphenateException e) {
+                    e.printStackTrace();
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        audienceNumView.setText(String.valueOf(memberList.size()));
+                        horizontalRecyclerView.getAdapter().notifyDataSetChanged();
+                    }
+                });
+            }
+        }).start();
     }
 
     private void onRoomMemberAdded(String name) {
@@ -436,22 +417,10 @@ public abstract class LiveBaseActivity extends BaseActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    audienceNumView.setText(String.valueOf(memberList.size()));
-                    getHorizontalRecyclerView().getAdapter().notifyDataSetChanged();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                audienceNumView.setText(String.valueOf(memberList.size()));
+                horizontalRecyclerView.getAdapter().notifyDataSetChanged();
             }
         });
-    }
-
-
-    public RecyclerView getHorizontalRecyclerView() {
-        if (horizontalRecyclerView == null) {
-            horizontalRecyclerView = (RecyclerView) findViewById(R.id.horizontal_recycle_view);
-        }
-        return horizontalRecyclerView;
     }
 
     private void onRoomMemberExited(String name) {
@@ -459,27 +428,20 @@ public abstract class LiveBaseActivity extends BaseActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    audienceNumView.setText(String.valueOf(memberList.size()));
-                    getHorizontalRecyclerView().getAdapter().notifyDataSetChanged();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                audienceNumView.setText(String.valueOf(memberList.size()));
+                horizontalRecyclerView.getAdapter().notifyDataSetChanged();
             }
         });
     }
 
-    //  @OnClick(R.id.root_layout)
     void onRootLayoutClick() {
         periscopeLayout.addHeart();
     }
 
-    //  @OnClick(R.id.comment_image)
     void onCommentImageClick() {
         showInputView();
     }
 
-    //  @OnClick(R.id.present_image)
     void onPresentImageClick() {
         EMMessage message = EMMessage.createSendMessage(EMMessage.Type.CMD);
         message.setReceipt(chatroomId);
@@ -490,20 +452,18 @@ public abstract class LiveBaseActivity extends BaseActivity {
         showLeftGiftVeiw(EMClient.getInstance().getCurrentUser());
     }
 
-    //  @OnClick(R.id.chat_image)
     void onChatImageClick() {
-//    ConversationListFragment fragment = ConversationListFragment.newInstance(anchorId, false);
-//    getSupportFragmentManager().beginTransaction()
-//        .replace(R.id.message_container, fragment)
-//        .commit();
+//        ConversationListFragment fragment = ConversationListFragment.newInstance(anchorId, false);
+//        getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.message_container, fragment)
+//                .commit();
     }
 
-    //  @OnClick(R.id.screenshot_image)
     void onScreenshotImageClick() {
         Bitmap bitmap = screenshot();
         if (bitmap != null) {
-            // ScreenshotDialog dialog = new ScreenshotDialog(this, bitmap);
-            //dialog.show();
+            ScreenshotDialog dialog = new ScreenshotDialog(this, bitmap);
+            dialog.show();
         }
 
     }
@@ -522,47 +482,48 @@ public abstract class LiveBaseActivity extends BaseActivity {
         super.onResume();
     }
 
+    private class AvatarAdapter extends RecyclerView.Adapter<AvatarViewHolder> {
+        List<String> namelist;
+        Context context;
 
-//  private class AvatarAdapter extends RecyclerView.Adapter<AvatarViewHolder> {
-//    List<String> namelist;
-//    Context context;
-//    TestAvatarRepository avatarRepository;
-//
-//    public AvatarAdapter(Context context, List<String> namelist) {
-//      this.namelist = namelist;
-//      this.context = context;
-//      avatarRepository = new TestAvatarRepository();
-//    }
-//
-//    @Override public AvatarViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//      return new AvatarViewHolder(
-//          LayoutInflater.from(context).inflate(R.layout.avatar_list_item, parent, false));
-//    }
-//
-//    @Override public void onBindViewHolder(AvatarViewHolder holder, final int position) {
-//      holder.itemView.setOnClickListener(new View.OnClickListener() {
-//        @Override public void onClick(View v) {
-//          showUserDetailsDialog(namelist.get(position));
-//        }
-//      });
-//      //暂时使用测试数据
+        public AvatarAdapter(Context context, List<String> namelist) {
+            this.namelist = namelist;
+            this.context = context;
+        }
+
+        @Override
+        public AvatarViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new AvatarViewHolder(
+                    LayoutInflater.from(context).inflate(R.layout.avatar_list_item, parent, false));
+        }
+
+        @Override
+        public void onBindViewHolder(AvatarViewHolder holder, final int position) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showUserDetailsDialog(namelist.get(position));
+                }
+            });
+            //暂时使用测试数据
 //      Glide.with(context)
 //          .load(avatarRepository.getAvatar())
 //          .placeholder(R.drawable.ease_default_avatar)
 //          .into(holder.Avatar);
-//    }
-//
-//    @Override public int getItemCount() {
-//      return namelist.size();
-//    }
-//  }
-//
-//  static class AvatarViewHolder extends RecyclerView.ViewHolder {
-//    @BindView(R.id.avatar) ImageView Avatar;
-//
-//    public AvatarViewHolder(View itemView) {
-//      super(itemView);
-//      ButterKnife.bind(this, itemView);
-//    }
-//  }
+        }
+
+        @Override
+        public int getItemCount() {
+            return namelist.size();
+        }
+    }
+
+    static class AvatarViewHolder extends RecyclerView.ViewHolder {
+        ImageView Avatar;
+
+        public AvatarViewHolder(View itemView) {
+            super(itemView);
+            Avatar= (ImageView) itemView.findViewById(R.id.avatar);
+        }
+    }
 }

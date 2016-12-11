@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
@@ -9,8 +8,6 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -18,6 +15,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
 }
 
 dependencies {
@@ -26,7 +25,6 @@ dependencies {
     compile project(':HX_IM')
     compile 'com.android.support:preference-v7:25+'
     compile files('libs/ulive-android-sdk-1.2.9.jar')
-    compile 'com.jakewharton:butterknife:8.0.1'
 }
 
 

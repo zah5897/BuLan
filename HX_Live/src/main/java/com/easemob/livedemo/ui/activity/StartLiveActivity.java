@@ -7,7 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewStub;
 import android.view.animation.Animation;
@@ -15,9 +15,11 @@ import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.easemob.livedemo.R;
 import com.easemob.livedemo.data.model.LiveSettings;
@@ -29,8 +31,6 @@ import com.easemob.livedemo.utils.Log2FileUtil;
 import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMChatRoom;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMCmdMessageBody;
-import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.controller.EaseUI;
 import com.ucloud.common.util.DeviceUtils;
 import com.ucloud.live.UEasyStreaming;
@@ -42,7 +42,7 @@ import java.util.Random;
 public class StartLiveActivity extends LiveBaseActivity
         implements UEasyStreaming.UStreamingStateListener {
     private static final String TAG = StartLiveActivity.class.getSimpleName();
-    Toolbar toolbar;
+    LinearLayout toolbar;
     UAspectFrameLayout mPreviewContainer;
     RelativeLayout startContainer;
     TextView countdownView;
@@ -83,49 +83,103 @@ public class StartLiveActivity extends LiveBaseActivity
     @Override
     protected void onActivityCreate(@Nullable Bundle savedInstanceState) {
         setContentView(R.layout.activity_start_live);
+        initView();
+        liveId = "bulan";
+        chatroomId = getIntent().getStringExtra("room_id");
+        anchorId = EMClient.getInstance().getCurrentUser();
+        usernameView.setText(anchorId);
+        initEnv();
+    }
 
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+    private void initView() {
+        toolbar = (LinearLayout) findViewById(R.id.toolbar);
         mPreviewContainer = (UAspectFrameLayout) findViewById(R.id.container);
         startContainer = (RelativeLayout) findViewById(R.id.start_container);
-
         countdownView = (TextView) findViewById(R.id.countdown_txtv);
-
         usernameView = (TextView) findViewById(R.id.tv_username);
-
         startBtn = (Button) findViewById(R.id.btn_start);
-
         liveEndLayout = (ViewStub) findViewById(R.id.finish_frame);
-
         coverImage = (ImageView) findViewById(R.id.cover_image);
         lightSwitch = (ImageButton) findViewById(R.id.img_bt_switch_light);
         voiceSwitch = (ImageButton) findViewById(R.id.img_bt_switch_voice);
 
-        //父类view
 
         leftGiftView = (LiveLeftGiftView) findViewById(R.id.left_gift_view1);
         leftGiftView2 = (LiveLeftGiftView) findViewById(R.id.left_gift_view2);
-        //  @BindView(R.id.message_view)
         messageView = (RoomMessagesView) findViewById(R.id.message_view);
-        //  @BindView(R.id.periscope_layout)
         periscopeLayout = (PeriscopeLayout) findViewById(R.id.periscope_layout);
-        //  @BindView(R.id.bottom_bar)
         bottomBar = findViewById(R.id.bottom_bar);
 
-
-        //  @BindView(R.id.barrage_layout)
         barrageLayout = (BarrageLayout) findViewById(R.id.barrage_layout);
-        //  @BindView(R.id.horizontal_recycle_view)
         horizontalRecyclerView = (RecyclerView) findViewById(R.id.horizontal_recycle_view);
-        //  @BindView(R.id.audience_num)
         audienceNumView = (TextView) findViewById(R.id.audience_num);
-        //  @BindView(R.id.new_messages_warn)
         newMsgNotifyImage = (ImageView) findViewById(R.id.new_messages_warn);
 
+        findViewById(R.id.img_bt_switch_camera).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchCamera();
+            }
+        });
 
-        anchorId = EMClient.getInstance().getCurrentUser();
-        usernameView.setText(anchorId);
-        initEnv();
+        findViewById(R.id.btn_start).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startLive();
+            }
+        });
+        findViewById(R.id.img_bt_close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                closeLive();
+            }
+        });
+
+        findViewById(R.id.img_bt_switch_voice).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggleMicrophone();
+            }
+        });
+
+        findViewById(R.id.img_bt_switch_light).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchLight();
+            }
+        });
+
+        findViewById(R.id.root_layout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onRootLayoutClick();
+            }
+        });
+        findViewById(R.id.comment_image).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onCommentImageClick();
+            }
+        });
+        findViewById(R.id.present_image).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onPresentImageClick();
+            }
+        });
+        findViewById(R.id.chat_image).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onChatImageClick();
+            }
+        });
+        findViewById(R.id.screenshot_image).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onScreenshotImageClick();
+            }
+        });
     }
 
     public void initEnv() {
@@ -134,8 +188,11 @@ public class StartLiveActivity extends LiveBaseActivity
             Log2FileUtil.getInstance().setLogCacheDir(mSettings.getLogCacheDir());
             Log2FileUtil.getInstance().startLog(); //
         }
+
+        //        UStreamingProfile.Stream stream = new UStreamingProfile.Stream(rtmpPushStreamDomain, "ucloud/" + mSettings.getPusblishStreamId());
+        //hardcode
         UStreamingProfile.Stream stream =
-                new UStreamingProfile.Stream(rtmpPushStreamDomain, "ucloud/" + chatroomId);
+                new UStreamingProfile.Stream(rtmpPushStreamDomain, "ucloud/" + liveId);
 
         mStreamingProfile =
                 new UStreamingProfile.Builder().setVideoCaptureWidth(mSettings.getVideoCaptureWidth())
@@ -185,6 +242,11 @@ public class StartLiveActivity extends LiveBaseActivity
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onBackPressed() {
         mEasyStreaming.stopRecording();
         super.onBackPressed();
@@ -193,14 +255,14 @@ public class StartLiveActivity extends LiveBaseActivity
     /**
      * 切换摄像头
      */
-    public void switchCamera(View view) {
+    void switchCamera() {
         mEasyStreaming.switchCamera();
     }
 
     /**
      * 开始直播
      */
-    public void startLive(View v) {
+    void startLive() {
         //demo为了测试方便，只有指定的账号才能开启直播
         startContainer.setVisibility(View.INVISIBLE);
         //Utils.hideKeyboard(titleEdit);
@@ -226,7 +288,7 @@ public class StartLiveActivity extends LiveBaseActivity
     /**
      * 关闭直播显示直播成果
      */
-    public void closeLive(View v) {
+    void closeLive() {
         mEasyStreaming.stopRecording();
         if (!isStarted) {
             finish();
@@ -235,7 +297,7 @@ public class StartLiveActivity extends LiveBaseActivity
         showConfirmCloseLayout();
     }
 
-    public void toggleMicrophone(View v) {
+    void toggleMicrophone() {
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         if (audioManager.isMicrophoneMute()) {
             audioManager.setMicrophoneMute(false);
@@ -249,6 +311,7 @@ public class StartLiveActivity extends LiveBaseActivity
     private void showConfirmCloseLayout() {
         //显示封面
         coverImage.setVisibility(View.VISIBLE);
+        coverImage.setImageResource(R.drawable.ease_ic_launcher);
         View view = liveEndLayout.inflate();
         Button closeConfirmBtn = (Button) view.findViewById(R.id.live_close_confirm);
         TextView usernameView = (TextView) view.findViewById(R.id.tv_username);
@@ -268,7 +331,7 @@ public class StartLiveActivity extends LiveBaseActivity
     /**
      * 打开或关闭闪关灯
      */
-    public void switchLight(View v) {
+    void switchLight() {
         boolean succeed = mEasyStreaming.toggleFlashMode();
         if (succeed) {
             if (lightSwitch.isSelected()) {
@@ -281,7 +344,10 @@ public class StartLiveActivity extends LiveBaseActivity
 
     @Override
     void onChatImageClick() {
-
+//        ConversationListFragment fragment = ConversationListFragment.newInstance(null, false);
+//        getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.message_container, fragment)
+//                .commit();
     }
 
     protected void setListItemClickListener() {
@@ -296,6 +362,7 @@ public class StartLiveActivity extends LiveBaseActivity
                             Animation.RELATIVE_TO_SELF, 0.5f);
             scaleAnimation.setDuration(COUNTDOWN_DELAY);
             scaleAnimation.setFillAfter(false);
+            enterRoom();//同步进行
             scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
@@ -304,28 +371,7 @@ public class StartLiveActivity extends LiveBaseActivity
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     countdownView.setVisibility(View.GONE);
-                    EMClient.getInstance()
-                            .chatroomManager()
-                            .joinChatRoom(chatroomId, new EMValueCallBack<EMChatRoom>() {
-                                @Override
-                                public void onSuccess(EMChatRoom emChatRoom) {
-                                    chatroom = emChatRoom;
-                                    addChatRoomChangeListenr();
-                                    onMessageListInit();
-                                    startNotifyLiveByCMDMsg();
-                                }
-
-                                @Override
-                                public void onError(int i, String s) {
-                                    showToast("加入聊天室失败");
-                                }
-                            });
-
-                    if (count == COUNTDOWN_END_INDEX && mEasyStreaming != null && !isShutDownCountdown) {
-                        showToast("直播开始！");
-                        mEasyStreaming.startRecording();
-                        isStarted = true;
-                    }
+                    enterRoom();
                 }
 
                 @Override
@@ -341,6 +387,38 @@ public class StartLiveActivity extends LiveBaseActivity
         }
     }
 
+
+
+    private void enterRoom(){
+        EMClient.getInstance()
+                .chatroomManager()
+                .joinChatRoom(chatroomId, new EMValueCallBack<EMChatRoom>() {
+                    @Override
+                    public void onSuccess(EMChatRoom emChatRoom) {
+                        chatroom = emChatRoom;
+                        addChatRoomChangeListenr();
+                        onMessageListInit();
+                        animationEndToStartLive();
+                    }
+
+                    @Override
+                    public void onError(int i, String s) {
+                        showToast("加入聊天室失败");
+
+
+                    }
+                });
+    }
+
+    private  void animationEndToStartLive(){
+        if ( mEasyStreaming != null && !isShutDownCountdown) {
+            showToast("直播开始！");
+            mEasyStreaming.startRecording();
+            isStarted = true;
+        }else{
+            showToast("当前无法直播");
+        }
+    }
     @Override
     protected void onPause() {
         super.onPause();
@@ -371,7 +449,6 @@ public class StartLiveActivity extends LiveBaseActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopNotify();
         if (mSettings.isOpenLogRecoder()) {
             Log2FileUtil.getInstance().stopLog();
         }
@@ -382,36 +459,5 @@ public class StartLiveActivity extends LiveBaseActivity
         if (chatRoomChangeListener != null) {
             EMClient.getInstance().chatroomManager().removeChatRoomChangeListener(chatRoomChangeListener);
         }
-    }
-
-    private boolean startNotify = false;
-
-    private void stopNotify() {
-        startNotify = false;
-    }
-
-    private void startNotifyLiveByCMDMsg() {
-        startNotify = true;
-        new Thread() {
-            public void run() {
-                while (startNotify) {
-
-                    EMMessage cmdMsg = EMMessage.createSendMessage(EMMessage.Type.CMD);
-//支持单聊和群聊，默认单聊，如果是群聊添加下面这行
-                    cmdMsg.setChatType(EMMessage.ChatType.ChatRoom);
-                    String action = "action_live";//action可以自定义
-                    EMCmdMessageBody cmdBody = new EMCmdMessageBody(action);
-                    String toUsername = chatroomId;//发送给某个人
-                    cmdMsg.setReceipt(toUsername);
-                    cmdMsg.addBody(cmdBody);
-                    EMClient.getInstance().chatManager().sendMessage(cmdMsg);
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }.start();
     }
 }
