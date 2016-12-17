@@ -50,16 +50,8 @@ public class CheckNewVersionTask extends AsyncTask<String, String, String> {
 				SerVersion=version;
 				if (!TextUtils.isEmpty(version)) {
 					String versionName = getVersionName();
-					int sl = version.length();
-					int cl = versionName.length();
-					int len = Math.min(sl, cl);
-					for (int i = 0; i < len; i++) {
-						char sv = version.charAt(i);
-						char cv = versionName.charAt(i);
-						if (sv > cv) {
-							String url = appInfo.optString("url");
-							return url;
-						}
+					if(versionName.compareTo(SerVersion)<0){
+						return appInfo.optString("url");
 					}
 				}
 				return null;

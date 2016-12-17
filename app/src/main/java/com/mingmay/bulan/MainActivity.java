@@ -23,6 +23,7 @@ import com.mingmay.bulan.app.CCApplication;
 import com.mingmay.bulan.app.NewMessageBroadcastReceiver;
 import com.mingmay.bulan.app.UserManager;
 import com.mingmay.bulan.service.CCService;
+import com.mingmay.bulan.task.CheckNewVersionTask;
 import com.mingmay.bulan.ui.ChatActivity;
 import com.mingmay.bulan.ui.LoginPage;
 import com.mingmay.bulan.ui.fragment.FriendFragment;
@@ -82,7 +83,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
         if (index > 0) {
             selectInstanceByIndex(index);
         }
-
+        new CheckNewVersionTask(this).execute();
     }
 
     private RadioButton topic, type, creator, friends, mine;
