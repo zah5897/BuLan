@@ -23,6 +23,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.mingmay.bulan.app.CCApplication;
 import com.mingmay.bulan.app.ParamManager;
+import com.mingmay.bulan.app.UserManager;
 import com.mingmay.bulan.app.err.ErrorCode;
 import com.mingmay.bulan.util.ToastUtil;
 
@@ -62,6 +63,11 @@ public class HttpUtils {
 		}
 		for (NameValuePair pair : ParamManager.headers) {
 			params.add(pair.getName(), pair.getValue());
+		}
+
+		if(UserManager.getInstance().getLoginUser()!=null){
+			params.add("ccukey", UserManager.getInstance().getLoginUser().ccukey);
+			params.add("userId",String.valueOf( UserManager.getInstance().getLoginUser().ID));
 		}
 		if (isNetworkConnected()) {
 			getAsyncHttpClient().post(url, params,

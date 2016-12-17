@@ -188,6 +188,7 @@ public class ContactPage extends Activity {
 		UserManager.getInstance().loadContact(cursor, new ContactListener() {
 			@Override
 			public void onSuccess(List<User> users) {
+				mListview.setEmptyView(new View(getBaseContext()));
 				if (cursor == 1) {
 					adapter.addAndClear(users);
 					mListview.setEmptyView(getLayoutInflater().inflate(
@@ -204,6 +205,7 @@ public class ContactPage extends Activity {
 				if (cursor == 1) {
 					adapter.claer();
 				}
+				mListview.setEmptyView(new View(getBaseContext()));
 				mPullRefreshListView.onRefreshComplete();
 				mListview.setEmptyView(getLayoutInflater().inflate(
 						R.layout.list_empty, null));

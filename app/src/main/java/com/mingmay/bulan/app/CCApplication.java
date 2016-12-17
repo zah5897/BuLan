@@ -6,7 +6,8 @@ import cn.sharesdk.framework.ShareSDK;
 import com.hyphenate.easeui.controller.EaseUI;
 import com.mingmay.bulan.MainActivity;
 import com.mingmay.bulan.app.err.CrashApplication;
-import com.ucloud.live.UEasyStreaming;
+import com.squareup.leakcanary.LeakCanary;
+//import com.ucloud.live.UEasyStreaming;
 
 public class CCApplication extends Application {
 
@@ -48,7 +49,7 @@ public class CCApplication extends Application {
 		CrashApplication.getInstance(this).onCreate();
 		EaseUI.getInstance().init(this, null);
 		DemoHelper.getInstance().init(app);
-		UEasyStreaming.initStreaming("publish3-key");
+		//UEasyStreaming.initStreaming("publish3-key");
 	}
 
 }

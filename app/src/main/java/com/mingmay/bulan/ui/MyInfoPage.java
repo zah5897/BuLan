@@ -73,7 +73,7 @@ public class MyInfoPage extends Activity implements OnClickListener {
 	private void setUserInfo() {
 		User loginUser = UserManager.getInstance().getLoginUser();
 		asyImg = ((CircularImageView) findViewById(R.id.head_icon));
-		ImageLoadUtil.load(this, asyImg, loginUser.userImg);
+		ImageLoadUtil.load(this, asyImg, loginUser.userImg,R.drawable.headlogo,R.drawable.headlogo);
 
 		genderView.setChecked(loginUser.gender == Gender.Female);
 		asyImg.setOnClickListener(this);

@@ -11,15 +11,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import com.easemob.livedemo.DemoConstants;
-import com.easemob.livedemo.ui.activity.LiveDetailsActivity;
-import com.easemob.livedemo.ui.widget.RoomMessagesView;
-import com.hyphenate.EMCallBack;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMMessage;
-import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.ui.EaseBaseActivity;
 import com.hyphenate.easeui.ui.EaseChatFragment;
@@ -31,8 +26,6 @@ import com.mingmay.bulan.ui.chat.ChatFragment;
 import com.mingmay.bulan.ui.group.GroupDetailsActivity;
 import com.mingmay.bulan.ui.group.NewGroupActivity;
 import com.mingmay.bulan.ui.group.RoomDetailsActivity;
-import com.mingmay.bulan.util.ToastUtil;
-import com.mingmay.bulan.view.dialog.AlertDialog;
 
 import java.util.List;
 
@@ -92,6 +85,7 @@ public class ChatActivity extends EaseBaseActivity {
         intentFilter.addAction("new.msg.del_back");
         // intentFilter.setPriority(3);
         registerReceiver(delFriendBroadcast, intentFilter);
+//        showLiveTip();
     }
 
     @Override
@@ -124,7 +118,10 @@ public class ChatActivity extends EaseBaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        EMClient.getInstance().chatManager().addMessageListener(msgListener);
+        if(chatType==EaseConstant.CHATTYPE_CHATROOM){
+            EMClient.getInstance().chatManager().addMessageListener(msgListener);
+        }
+
     }
 
     @Override
@@ -176,16 +173,23 @@ public class ChatActivity extends EaseBaseActivity {
 
         @Override
         public void onCmdMessageReceived(List<EMMessage> messages) {
-            EMMessage message = messages.get(messages.size() - 1);
+            final EMMessage message = messages.get(messages.size() - 1);
+
             String action = ((EMCmdMessageBody) message.getBody()).action();
             if ("action_live".equals(action)) {
+                if(donotTipLive){
+                    return;
+                }
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        showLiveTip();
+                        long time = message.getMsgTime();
+                        long now = System.currentTimeMillis();
+                        if (now - time < 5000) {
+                            showLiveTip();
+                        }
                     }
                 });
-
             }
         }
 
@@ -203,18 +207,26 @@ public class ChatActivity extends EaseBaseActivity {
     };
 
     Dialog liveTip;
-
+    boolean  donotTipLive=false;
     private void showLiveTip() {
         if (liveTip != null && liveTip.isShowing()) {
             return;
         }
-        liveTip = new android.app.AlertDialog.Builder(this).setTitle("提示").setMessage("该聊天室正在直播，是否观看").setNegativeButton("取消", null).setPositiveButton("去看看", new DialogInterface.OnClickListener() {
+        liveTip = new android.app.AlertDialog.Builder(this).setTitle("提示").setMessage("该聊天室正在直播，是否观看").setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                donotTipLive=true;
+                dialogInterface.dismiss();
+            }
+        }).setPositiveButton("去看看", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
-                Intent intent = new Intent(getBaseContext(), LiveDetailsActivity.class);
-                intent.putExtra("room_id", toChatUsername);
-                startActivity(intent);
+                EMClient.getInstance().chatManager().removeMessageListener(msgListener);
+               /// Intent intent = new Intent(getBaseContext(), LiveDetailsActivity.class);
+               // intent.putExtra("room_id", toChatUsername);
+               // startActivity(intent);
+                donotTipLive=false;
             }
         }).create();
         liveTip.show();

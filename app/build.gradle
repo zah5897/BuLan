@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'android-apt'
 android {
     compileSdkVersion 25
     buildToolsVersion '25.0.0'
@@ -26,7 +26,10 @@ dependencies {
     compile project(':ShareSDK')
     compile files('libs/zxing.jar')
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1@aar'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1@aar'
     compile project(':HX_IM')
-    compile project(':HX_Live')
 }
+
+
 

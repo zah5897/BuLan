@@ -93,10 +93,9 @@
                 android:textSize="17sp" />
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/light_gray" />
+
+        <View
+            style="@style/comm_line"/>
 
         <LinearLayout
             android:id="@+id/msg_layout"
@@ -142,11 +141,8 @@
         </LinearLayout>
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/extral_layout"
-        android:background="@color/light_gray" />
+    <View android:layout_below="@+id/extral_layout"
+        style="@style/comm_line"/>
 
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/pull_refresh_list"

@@ -744,7 +744,7 @@ public class DemoHelper {
 			e.printStackTrace();
 		}
 		if (id == 0) {
-			throw new RuntimeException("id is null");
+			return null;
 		}
 
 		User sysUser = UserManager.getInstance().getUser(id);
