@@ -57,21 +57,13 @@ public class ContactPage extends Activity {
 
 	public CharacterParser characterParser = new CharacterParser();
 	private SideBar sideBar;
-
 	private ListView mListview;
-
 	public boolean need_back;
-
 	public String[] exist_members;
-
 	private TextView right_btn_sure, tip;
-
 	private String forward_msg_id;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_contact);
 		need_back = getIntent().getBooleanExtra("need_back", false);

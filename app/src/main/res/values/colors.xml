@@ -21,7 +21,7 @@
     <color name="actionsheet_gray">#8F8F8F</color>
     <color name="tag_selected">#937E5C</color>
     <color name="red">#FF0000</color>
-    
+    <color name="gray_line">#ffe1e1e1</color>
     <color name="bulan_content_color">#383838</color>
 
     <drawable name="guide_transparent">#00000000</drawable>

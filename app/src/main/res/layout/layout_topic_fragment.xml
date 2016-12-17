@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/top_layout"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_alignParentTop="true"
-        android:background="@color/white" >
+        android:background="@color/white">
 
         <TextView
             android:layout_width="match_parent"
@@ -30,12 +30,12 @@
             android:visibility="gone" />
     </RelativeLayout>
 
-    <ImageView
+
+    <View
         android:id="@+id/breadLine"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/top_layout"
-        android:background="@color/light_gray" />
+        style="@style/comm_line"
+        android:layout_below="@+id/top_layout" />
+
 
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/pull_refresh_list"
@@ -43,7 +43,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/breadLine"
         android:background="#FFFFFFFF"
-        
+
         android:fadingEdge="none"
         android:fastScrollEnabled="false"
         android:footerDividersEnabled="false"

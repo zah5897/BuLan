@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/content"
@@ -11,12 +11,11 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <ImageView
+
+    <View
         android:id="@+id/line"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_above="@+id/rg_tab"
-        android:background="@color/light_gray" />
+        style="@style/comm_line"
+        android:layout_above="@+id/rg_tab" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,12 +23,12 @@
         android:background="@color/white"
         android:gravity="center"
         android:orientation="horizontal"
-        android:weightSum="5" >
+        android:weightSum="5">
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" >
+            android:layout_weight="1">
 
             <RadioButton
                 android:id="@+id/topic"
@@ -44,7 +43,7 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" >
+            android:layout_weight="1">
 
             <RadioButton
                 android:id="@+id/type"
@@ -58,7 +57,7 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" >
+            android:layout_weight="1">
 
             <RadioButton
                 android:id="@+id/creator"
@@ -73,7 +72,7 @@
             android:id="@+id/friends_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" >
+            android:layout_weight="1">
 
             <RadioButton
                 android:id="@+id/friends"
@@ -100,7 +99,7 @@
             android:id="@+id/mine_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" >
+            android:layout_weight="1">
 
             <RadioButton
                 android:id="@+id/mine"
@@ -108,8 +107,7 @@
                 android:layout_centerInParent="true"
                 android:background="@color/transparent"
                 android:drawableTop="@drawable/tab_mine_selector"
-                android:text="我的" >
-            </RadioButton>
+                android:text="我的"></RadioButton>
 
             <ImageView
                 android:id="@+id/no_read_msg_tip"

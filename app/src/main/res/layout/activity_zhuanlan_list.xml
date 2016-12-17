@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/top_layout"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/white" >
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/title"
@@ -51,19 +51,26 @@
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/pull_refresh_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:background="#FFFFFFFF"
         android:fadingEdge="none"
         android:fastScrollEnabled="false"
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"
         android:smoothScrollbar="true" />
-     <RelativeLayout
-         android:layout_width="match_parent"
-         android:layout_height="45dp">
 
-         <Button android:id="@+id/live" android:layout_centerInParent="true" android:background="@null"
-             android:layout_width="wrap_content" android:text="我要开直播"
-             android:layout_height="wrap_content" />
-     </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/live"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@null"
+            android:text="我要开直播" />
+    </RelativeLayout>
 </LinearLayout>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/top_layout"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_alignParentTop="true"
-        android:background="@color/white" >
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -18,7 +18,7 @@
             android:layout_toRightOf="@+id/search"
             android:gravity="center"
             android:orientation="horizontal"
-            android:weightSum="2" >
+            android:weightSum="2">
 
             <TextView
                 android:id="@+id/lanmu"
@@ -62,19 +62,17 @@
             android:gravity="center" />
     </RelativeLayout>
 
-    <ImageView
+    <View
         android:id="@+id/breadLine"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/top_layout"
-        android:background="@color/light_gray" />
+        style="@style/comm_line"
+        android:layout_below="@+id/top_layout" />
+
 
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/breadLine" >
-    </FrameLayout>
+        android:layout_below="@+id/breadLine"></FrameLayout>
 
     <ImageView
         android:id="@+id/to_top"
