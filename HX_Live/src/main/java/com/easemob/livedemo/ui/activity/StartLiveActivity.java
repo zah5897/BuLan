@@ -54,7 +54,8 @@ public class StartLiveActivity extends LiveBaseActivity
     ImageButton voiceSwitch;
 
     protected UEasyStreaming mEasyStreaming;
-    protected String rtmpPushStreamDomain = "publish3.cdn.ucloud.com.cn";
+    protected String rtmpPushStreamDomain = "t.mingmay.com.cn";
+//    protected String rtmpPushStreamDomain = "publish3.cdn.ucloud.com.cn";
     public static final int MSG_UPDATE_COUNTDOWN = 1;
 
     public static final int COUNTDOWN_DELAY = 1000;
@@ -388,8 +389,7 @@ public class StartLiveActivity extends LiveBaseActivity
     }
 
 
-
-    private void enterRoom(){
+    private void enterRoom() {
         EMClient.getInstance()
                 .chatroomManager()
                 .joinChatRoom(chatroomId, new EMValueCallBack<EMChatRoom>() {
@@ -410,15 +410,16 @@ public class StartLiveActivity extends LiveBaseActivity
                 });
     }
 
-    private  void animationEndToStartLive(){
-        if ( mEasyStreaming != null && !isShutDownCountdown) {
+    private void animationEndToStartLive() {
+        if (mEasyStreaming != null && !isShutDownCountdown) {
             showToast("直播开始！");
             mEasyStreaming.startRecording();
             isStarted = true;
-        }else{
+        } else {
             showToast("当前无法直播");
         }
     }
+
     @Override
     protected void onPause() {
         super.onPause();

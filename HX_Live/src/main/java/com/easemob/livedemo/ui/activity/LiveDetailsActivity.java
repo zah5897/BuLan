@@ -30,7 +30,8 @@ import java.util.Random;
 
 public class LiveDetailsActivity extends LiveBaseActivity implements UVideoView.Callback {
 
-    String rtmpPlayStreamUrl = "rtmp://vlive3.rtmp.cdn.ucloud.com.cn/ucloud/";
+    String rtmpPlayStreamUrl = "rtmp://rtmp.mingmay.com.cn/mingmay/";
+//    String rtmpPlayStreamUrl = "rtmp://vlive3.rtmp.cdn.ucloud.com.cn/ucloud/";
     private UVideoView mVideoView;
 
     RelativeLayout loadingLayout;
@@ -74,13 +75,11 @@ public class LiveDetailsActivity extends LiveBaseActivity implements UVideoView.
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
 
-        LiveRoom liveRoom = getIntent().getParcelableExtra("liveroom");
-        liveId = liveRoom.getId();
-        chatroomId = liveRoom.getChatroomId();
-        int coverRes = liveRoom.getCover();
-        coverView.setImageResource(coverRes);
+        liveId = "bulan";
+        chatroomId = getIntent().getStringExtra("room_id");
+//        coverView.setImageResource(coverRes);
 
-        anchorId = liveRoom.getAnchorId();
+//        anchorId = liveRoom.getAnchorId();
         usernameView.setText(anchorId);
 
         mVideoView = (UVideoView) findViewById(R.id.videoview);
